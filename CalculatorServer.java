@@ -9,7 +9,7 @@ public class CalculatorServer {
             CalculatorImplementation calculator = new CalculatorImplementation();
 
             // Bind the CalculatorImplementation object to the RMI registry
-            Registry registry = LocateRegistry.createRegistry(1099);
+            Registry registry = LocateRegistry.createRegistry(1091);
             registry.bind("CalculatorService", calculator);
 
             System.out.println("Calculator Server is running...");

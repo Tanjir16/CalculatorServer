@@ -7,7 +7,7 @@ public class CalculatorClient {
 
     public static void main(String[] args) {
         try {
-            Registry registry = LocateRegistry.getRegistry("localhost", 1099);
+            Registry registry = LocateRegistry.getRegistry("localhost", 1091);
             Calculator calculator = (Calculator) registry.lookup("CalculatorService");
 
             Scanner scanner = new Scanner(System.in);
