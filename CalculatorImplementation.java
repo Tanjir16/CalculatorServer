@@ -1,19 +1,34 @@
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Stack;
-// CalculatorImplementation class implements the Calculator interface and provides its functionality
+import java.net.InetAddress;
+import java.rmi.server.RemoteServer;
+import java.rmi.server.ServerNotActiveException;
+
 public class CalculatorImplementation extends UnicastRemoteObject implements Calculator {
-    private Stack<Integer> stack;
-    // Constructor initializes the stack
+    private Map<String, Stack<Integer>> clientStacks; // Map to store client stacks
+
     public CalculatorImplementation() throws RemoteException {
         super();
-        stack = new Stack<>();
+        clientStacks = new HashMap<>();
     }
-    // Pushes a value onto the stack
+
+    private Stack<Integer> getClientStack() {
+        String clientIP = "";
+        try {
+            clientIP = InetAddress.getLocalHost().getHostAddress();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return clientStacks.computeIfAbsent(clientIP, k -> new Stack<>());
+    }
+
     public void pushValue(int value) throws RemoteException {
-        stack.push(value);
+        getClientStack().push(value);
     }
-     // Pushes an operation onto the stack (e.g., "min" or "max")
 
     public void pushOperation(String operation) throws RemoteException {
         if (operation.equals("min")) {
@@ -24,19 +39,22 @@ public class CalculatorImplementation extends UnicastRemoteObject implements Cal
             // Handle other operations
         }
     }
-    // Pops and returns the top value from the stack
+
     public int pop() throws RemoteException {
+        Stack<Integer> stack = getClientStack();
         if (!stack.isEmpty()) {
             return stack.pop();
         }
-        return -1; // Return -1 to indicate an empty stack
+        return -1;
     }
-    // Checks if the stack is empty
+
     public boolean isEmpty() throws RemoteException {
+        Stack<Integer> stack = getClientStack();
         return stack.isEmpty();
     }
-     // Delays and then pops a value from the stack
+
     public int delayPop(int millis) throws RemoteException {
+        Stack<Integer> stack = getClientStack();
         try {
             Thread.sleep(millis);
         } catch (InterruptedException e) {
@@ -45,23 +63,24 @@ public class CalculatorImplementation extends UnicastRemoteObject implements Cal
         if (!stack.isEmpty()) {
             return stack.pop();
         }
-        return -1; // Return -1 to indicate an empty stack
+        return -1;
     }
-    // It Pushes the Least Common Multiple of two top values onto the stack
 
     public void pushLCM() throws RemoteException {
+        Stack<Integer> stack = getClientStack();
         if (stack.size() < 2) {
-            return; // LCM requires at least two values
+            return;
         }
         int value2 = stack.pop();
         int value1 = stack.pop();
         int lcm = calculateLCM(value1, value2);
         stack.push(lcm);
     }
-    // It Pushes the Greatest Common Divisor of two top values onto the stack
+
     public void pushGCD() throws RemoteException {
+        Stack<Integer> stack = getClientStack();
         if (stack.size() < 2) {
-            return; // GCD requires at least two values
+            return;
         }
         int value2 = stack.pop();
         int value1 = stack.pop();
@@ -69,13 +88,11 @@ public class CalculatorImplementation extends UnicastRemoteObject implements Cal
         stack.push(gcd);
     }
 
-    // Made method to calculate the least common multiple
     private int calculateLCM(int a, int b) {
         int lcm = (a * b) / calculateGCD(a, b);
         return lcm;
     }
 
-    // Made method to calculate the greatest common divisor
     private int calculateGCD(int a, int b) {
         if (b == 0) {
             return a;

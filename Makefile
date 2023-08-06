@@ -23,8 +23,11 @@ $(BIN_DIR)/%.class: $(SRC_DIR)/%.java
 
 
 # Target to run the RMI client
-run: build
+run: 
 	$(JAVA) $(JAVAFLAGS) CalculatorClient
+
+server: 
+	$(JAVA) $(JAVAFLAGS) CalculatorServer
 
 # Target to clean the generated class files
 

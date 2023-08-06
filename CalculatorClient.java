@@ -1,6 +1,8 @@
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.Random;
+import java.net.InetAddress;
+import java.rmi.RemoteException;
 
 public class CalculatorClient {
 
@@ -10,6 +12,11 @@ public class CalculatorClient {
             Calculator calculator = (Calculator) registry.lookup("CalculatorService");
 
             Random random = new Random();
+
+            // Get the client's IP address
+            String clientIP = InetAddress.getLocalHost().getHostAddress();
+            String clientID = "Client ID: " + clientIP;
+            System.out.println(clientID);
 
             // First I Generated random values for LCM and GCD
             int value1 = random.nextInt(100) + 1; // Generates a random integer between 1 and 100
@@ -32,7 +39,7 @@ public class CalculatorClient {
             System.out.println("Greatest Common Divisor (GCD): " + calculator.pop());
 
             // Generate and push 10 random values onto the stack
-            System.out.println("\nGenerated random values:");
+            System.out.println("\nGenerated random values for client:");
             for (int i = 0; i < 10; i++) {
                 int randomValue = random.nextInt(100); // Generates a random integer between 0 and 99
                 calculator.pushValue(randomValue);
