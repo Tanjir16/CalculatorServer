@@ -5,10 +5,10 @@ public class CalculatorServer {
 
     public static void main(String[] args) {
         try {
-            // Create the CalculatorImplementation object
+            // Have Created the CalculatorImplementation object
             CalculatorImplementation calculator = new CalculatorImplementation();
 
-            // Bind the CalculatorImplementation object to the RMI registry
+            // Have Bind the CalculatorImplementation object to the RMI registry
             Registry registry = LocateRegistry.createRegistry(1091);
             registry.bind("CalculatorService", calculator);
 

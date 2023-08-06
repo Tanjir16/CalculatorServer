@@ -1,7 +1,6 @@
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.Random;
-import java.util.Scanner;
 
 public class CalculatorClient {
 
@@ -10,32 +9,30 @@ public class CalculatorClient {
             Registry registry = LocateRegistry.getRegistry("localhost", 1091);
             Calculator calculator = (Calculator) registry.lookup("CalculatorService");
 
-            Scanner scanner = new Scanner(System.in);
+            Random random = new Random();
 
-            // Read input values from the user
-            System.out.print("Enter value 1: ");
-            int value1 = scanner.nextInt();
+            // First I Generated random values for LCM and GCD
+            int value1 = random.nextInt(100) + 1; // Generates a random integer between 1 and 100
+            int value2 = random.nextInt(100) + 1;
 
-            System.out.print("Enter value 2: ");
-            int value2 = scanner.nextInt();
-
-            // Push values onto the stack
+            // Then it Push values onto the stack
             calculator.pushValue(value1);
             calculator.pushValue(value2);
 
-            // Push "LCM" operation and get the result
+            // Also Push LCM operation and get the result
             calculator.pushLCM();
+            System.out.println("Generated value 1 for LCM: " + value1);
+            System.out.println("Generated value 2 for LCM: " + value2);
             System.out.println("Least Common Multiple (LCM): " + calculator.pop());
 
-            // Push "GCD" operation and get the result
+            // Then it Pushes GCD operation and get the result
             calculator.pushGCD();
+            System.out.println("Generated value 1 for GCD: " + value1);
+            System.out.println("Generated value 2 for GCD: " + value2);
             System.out.println("Greatest Common Divisor (GCD): " + calculator.pop());
 
-            Random random = new Random();
-
+            // Generate and push 10 random values onto the stack
             System.out.println("\nGenerated random values:");
-
-            // Push 10 random values onto the stack
             for (int i = 0; i < 10; i++) {
                 int randomValue = random.nextInt(100); // Generates a random integer between 0 and 99
                 calculator.pushValue(randomValue);
