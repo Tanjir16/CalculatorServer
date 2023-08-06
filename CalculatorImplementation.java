@@ -88,15 +88,23 @@ public class CalculatorImplementation extends UnicastRemoteObject implements Cal
         stack.push(gcd);
     }
 
-    private int calculateLCM(int a, int b) {
+    public int calculateLCM(int a, int b) throws RemoteException {
         int lcm = (a * b) / calculateGCD(a, b);
         return lcm;
     }
 
-    private int calculateGCD(int a, int b) {
+    public int calculateGCD(int a, int b) throws RemoteException {
         if (b == 0) {
             return a;
         }
         return calculateGCD(b, a % b);
+    }
+
+    public int calculateMin(int a, int b) throws RemoteException {
+        return Math.min(a, b);
+    }
+
+    public int calculateMax(int a, int b) throws RemoteException {
+        return Math.max(a, b);
     }
 }

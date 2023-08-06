@@ -50,15 +50,60 @@ Each operation is associated with a unique Client ID, ensuring separate stack ma
 
 ## Client Operations
 
-- **Client Identification**: The client's IP address is used as a unique identifier (Client ID) to differentiate between multiple clients. This ensures that each client maintains its own separate stack on the server.
+The code begins by importing necessary classes and packages, including those related to reading files, RMI (Remote Method Invocation), networking, and arrays.
 
-- **Random Value Generation**: The client generates random values for calculations, allowing for a dynamic and varied set of inputs.
+Main Method: The program's main execution starts in the main method.
 
-- **Stack Operations**: The client demonstrates the use of stack operations including pushing values onto the stack, calculating LCM and GCD, popping values, and performing delayed pops.
+RMI Setup:
 
-- **Output Display**: The client displays the results of each operation, including generated values, LCM, GCD, minimum, and maximum values. The client ID is also prominently displayed.
+It creates an instance of the Registry class by calling LocateRegistry.getRegistry("localhost", 1091). This is used to locate the RMI registry on the localhost at port 1091.
+It retrieves the remote Calculator object from the registry using the lookup method.
+Random Number Generator: A Random object is created, which will be used later for generating random numbers.
 
+Client IP Address:
 
+The client's IP address is obtained using InetAddress.getLocalHost().getHostAddress().
+A string with the client's IP address is created and displayed as "Client ID: [IP Address]" using System.out.println.
+Reading Input Values:
+
+The program reads input values from a file named "input.txt" using a BufferedReader.
+It reads each line from the file and converts it to an integer using Integer.parseInt(line).
+The obtained integer value is then pushed onto the calculator's stack using the pushValue method.
+Reading Expected Output Values:
+
+Similar to reading input values, the program reads expected output values from a file named "expected_output.txt" using a BufferedReader.
+It reads each line from the file and displays it as "Expected Output: [line]" using System.out.println.
+Closing Files: After reading input and expected output values, the input and expected output files are closed using the close method on the BufferedReader objects.
+
+## Testing Values : - 
+
+The Input Values :    
+50
+10
+15
+26
+41
+34
+22
+17
+28
+6
+
+The Expected Output :
+936
+1
+59
+13
+82
+12
+15
+26
+41
+34
+22
+17
+28
+6
 ## How to Use
 
 1. Start the RMI server by running `java CalculatorServer`.
