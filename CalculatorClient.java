@@ -18,6 +18,8 @@ public class CalculatorClient {
             String clientID = "Client ID: " + clientIP;
             System.out.println(clientID);
 
+            // ------------------------------------Testing Part For The Client-------------------------------------------------------- 
+
             // First I Generated random values for LCM and GCD
             int value1 = random.nextInt(100) + 1; // Generates a random integer between 1 and 100
             int value2 = random.nextInt(100) + 1;
